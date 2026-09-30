@@ -135,7 +135,7 @@ var gform_gravityforms = {"strings":{"invalid_file_extension":"This type of file
 <!-- End Google Tag Manager (noscript) -->
 <div class="hfeed" id="wrapper">
 <header id="header">
-<div class="header-top"><p class="header-notice"><span class="header-notice__title weight-600 uppercase"> </span><span class="header-notice__text">Pomembno obvestilo - skladišče Jesenice bo brez elektrike na dan 2.10.2026. Zahvaljujemo se vam za razumevanje!</span><span class="header-notice__close ico ico--close clickable"></span></p></div> <div class="main-header">
+<div class="header-top"><p class="header-notice"><span class="header-notice__title weight-600 uppercase"> </span><span class="header-notice__text">Pomembno obvestilo - skladišče Jesenice bo brez elektrike na dan 2.10.2026. Zahvaljujemo se vam za razumevanje!</span><span class="header-notice__mobile">Jesenice: 2. 10. 2026 brez elektrike</span><span class="header-notice__close ico ico--close clickable"></span></p></div> <div class="main-header">
 <div class="container container--big">
 <div class="content flex-line flex-line--space-between">
 <div id="branding">
@@ -809,7 +809,16 @@ gform.initializeOnLoaded( function() { jQuery(document).on('gform_post_render', 
 <script>
 gform.initializeOnLoaded( function() {jQuery(document).trigger("gform_pre_post_render", [{ formId: "1", currentPage: "1", abort: function() { this.preventDefault(); } }]);        if (event && event.defaultPrevented) {                return;        }        const gformWrapperDiv = document.getElementById( "gform_wrapper_1" );        if ( gformWrapperDiv ) {            const visibilitySpan = document.createElement( "span" );            visibilitySpan.id = "gform_visibility_test_1";            gformWrapperDiv.insertAdjacentElement( "afterend", visibilitySpan );        }        const visibilityTestDiv = document.getElementById( "gform_visibility_test_1" );        let postRenderFired = false;        function triggerPostRender() {            if ( postRenderFired ) {                return;            }            postRenderFired = true;            gform.core.triggerPostRenderEvents( 1, 1 );            if ( visibilityTestDiv ) {                visibilityTestDiv.parentNode.removeChild( visibilityTestDiv );            }        }        function debounce( func, wait, immediate ) {            var timeout;            return function() {                var context = this, args = arguments;                var later = function() {                    timeout = null;                    if ( !immediate ) func.apply( context, args );                };                var callNow = immediate && !timeout;                clearTimeout( timeout );                timeout = setTimeout( later, wait );                if ( callNow ) func.apply( context, args );            };        }        const debouncedTriggerPostRender = debounce( function() {            triggerPostRender();        }, 200 );        if ( visibilityTestDiv && visibilityTestDiv.offsetParent === null ) {            const observer = new MutationObserver( ( mutations ) => {                mutations.forEach( ( mutation ) => {                    if ( mutation.type === 'attributes' && visibilityTestDiv.offsetParent !== null ) {                        debouncedTriggerPostRender();                        observer.disconnect();                    }                });            });            observer.observe( document.body, {                attributes: true,                childList: false,                subtree: true,                attributeFilter: [ 'style', 'class' ],            });        } else {            triggerPostRender();        }    } );
 </script>
-<style>@media (max-width:480px) { body.dinos-chat-open > button[aria-label="Pogovor z Dinom"] { visibility:hidden !important; pointer-events:none !important; } }</style>
+<style>
+.header-notice__mobile { display: none; }
+@media (max-width:480px) {
+  body.dinos-chat-open > button[aria-label="Pogovor z Dinom"] { visibility:hidden !important; pointer-events:none !important; }
+  .header-top .header-notice { display:flex; align-items:center; justify-content:center; gap:8px; padding:8px 12px; min-height:40px; white-space:nowrap; }
+  .header-notice__title, .header-notice__text { display:none !important; }
+  .header-notice__mobile { display:inline-block; font-size:13px; line-height:24px; color:#fff; }
+  .header-notice__close { flex:0 0 24px; margin:0 !important; }
+}
+</style>
 <script defer src="https://dinos-mia.lovable.app/dino-widget.js"></script>
 <script defer src="dinos-preview-fix.js"></script></body>
 </html>
